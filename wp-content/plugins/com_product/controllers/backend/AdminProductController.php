@@ -127,9 +127,9 @@ class AdminProductController{
 		}		
 		if(count($arrParam[$this->create_id('img-url')]) > 0){			
 			foreach ($arrParam[$this->create_id('img-url')] as $key => $value) {				
-				if(!empty($value))
+				if(!empty($value)){
 					$imgThumbnailHelper->resizeImage($value,$width,$height);
-
+				}
 			}
 		}		
 		
