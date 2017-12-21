@@ -1,8 +1,8 @@
 <?php
-require_once get_template_directory() . '/inc/customizer.php';
+//require_once get_template_directory() . DS . 'inc'.DS.'customizer.php';
 
 global $customizerGlobal;
-$customizerGlobal = new CustomizerControl();
+//$customizerGlobal = new CustomizerControl();
 add_filter( 'nav_menu_link_attributes', 'wp_nav_menu_link', 10, 3 );
 function wp_nav_menu_link( $atts, $item, $args ) {	
 	if(in_array("current-menu-item", $item->classes)){
