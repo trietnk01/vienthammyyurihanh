@@ -3,6 +3,13 @@
 </div>
 <div class="container margin-top-15">    
     <?php 
+    if(have_posts()){
+        while (have_posts()) {
+            the_post();
+            echo '<h3 class="ecommerce">'.get_the_title().'</h3>';
+        }
+        wp_reset_postdata();
+    }    
     global $zController,$zendvn_sp_settings;    
     $vHtml=new HtmlControl();        
     $pageIDLoginCheckout = $zController->getHelper('GetPageId')->get('_wp_page_template','login-checkout.php'); 
@@ -17,46 +24,55 @@
         wp_redirect($permarlinkZcart);
     }
 
-    if(have_posts()){
-        while (have_posts()) {
-            the_post();
-            echo '<h3 class="ecommerce">'.get_the_title().'</h3>';
-        }
-        wp_reset_postdata();
+    $data=array();   
+    $error=$zController->_data["error"];
+    $success=$zController->_data["success"];                           
+    if(count($zController->_data["data"]) > 0){
+        $data=$zController->_data["data"];                  
     }
-    $msg = "";
-    $data=array();        
-    $error=$zController->_data["error"];  
-    $success=$zController->_data["success"];      
-    if(count($error) > 0){
-        $msg .= '<ul class="comproduct33">';        
-        foreach ($error as $key => $val){
-            $msg .= '<li>' . $val . '</li>';
-        }
-        $msg .= '</ul>';
-    }
-    else{
-        if(count($success) > 0){
-            $msg .= '<ul class="comproduct35">';        
-            foreach ($success as $key => $val){
-                $msg .= '<li>' . $val . '</li>';
-            }
-            $msg .= '</ul>';
-        }
-    }    
-    if(count($zController->_data["data"])==0){
-        $data=$detail;
-    }
-    else{
-        $data=$zController->_data["data"];
-    }
+
     $totalPrice=0;
     $totalQuantity=0;
     $page_id_register_member = $zController->getHelper('GetPageId')->get('_wp_page_template','register-member.php');  
     $register_member_link = get_permalink($page_id_register_member);
-
     ?>
     <div class="margin-top-15">
+        <?php         
+        if(count($error) > 0 || count($success) > 0){
+            ?>
+            <div class="alert">
+                <?php                                           
+                if(count($error) > 0){
+                    ?>
+                    <ul class="comproduct33">
+                        <?php 
+                        foreach ($error as $key => $value) {
+                            ?>
+                            <li><?php echo $value; ?></li>
+                            <?php
+                        }
+                        ?>                              
+                    </ul>
+                    <?php
+                }
+                if(count($success) > 0){
+                    ?>
+                    <ul class="comproduct50">
+                        <?php 
+                        foreach ($success as $key => $value) {
+                            ?>
+                            <li><?php echo $value; ?></li>
+                            <?php
+                        }
+                        ?>                              
+                    </ul>
+                    <?php
+                }
+                ?>                                              
+            </div>              
+            <?php
+        }
+        ?>     
         <table id="com_product16" class="com_product16" cellpadding="0" cellspacing="0" width="100%">
             <thead>
                 <tr>    

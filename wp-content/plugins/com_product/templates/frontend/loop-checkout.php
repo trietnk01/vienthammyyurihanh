@@ -3,30 +3,66 @@
 </div>
 <div class="container margin-top-15">  
     <?php 
-    global $zController,$zendvn_sp_settings;
-    $vHtml=new HtmlControl();    
-    $pageIDLoginCheckout = $zController->getHelper('GetPageId')->get('_wp_page_template','login-checkout.php'); 
-    $pageIDzcart = $zController->getHelper('GetPageId')->get('_wp_page_template','zcart.php');    
-    $permarlinkLoginCheckout = get_permalink($pageIDLoginCheckout);            
-    $permarlinkZCart = get_permalink($pageIDzcart);
-    $ssValueUser="userlogin";
-    $ssValueCart="zcart";
-    $ssUser       = $zController->getSession('SessionHelper',"vmuser",$ssValueUser);
-    $ssCart        = $zController->getSession('SessionHelper',"vmart",$ssValueCart);    
-    $arrUser = @$ssUser->get($ssValueUser)["userInfo"]; 
-    $arrCart = $ssCart->get($ssValueCart)["cart"];     
-    if(count($arrUser) == 0){
-       wp_redirect($permarlinkLoginCheckout);    
-    }
-    if(count($arrCart) == 0){
-        wp_redirect($permarlinkZCart);
-    }    
+global $zController,$zendvn_sp_settings;
+$vHtml=new HtmlControl();    
+$pageIDLoginCheckout = $zController->getHelper('GetPageId')->get('_wp_page_template','login-checkout.php'); 
+$pageIDzcart = $zController->getHelper('GetPageId')->get('_wp_page_template','zcart.php');    
+$permarlinkLoginCheckout = get_permalink($pageIDLoginCheckout);            
+$permarlinkZCart = get_permalink($pageIDzcart);
+$ssValueUser="userlogin";
+$ssValueCart="zcart";
+$ssUser       = $zController->getSession('SessionHelper',"vmuser",$ssValueUser);
+$ssCart        = $zController->getSession('SessionHelper',"vmart",$ssValueCart);    
+$arrUser = @$ssUser->get($ssValueUser)["userInfo"]; 
+$arrCart = $ssCart->get($ssValueCart)["cart"];   
+if(count($arrUser) == 0){    
+    wp_redirect($permarlinkLoginCheckout);    
+}
+if(count($arrCart) == 0){
+    wp_redirect($permarlinkZCart);
+}    
+
 $id=$arrUser["id"];
 $userModel=$zController->getModel("/frontend","UserModel"); 
-$paymentMethodModel=$zController->getModel("/frontend","PaymentMethodModel"); 
 $info=$userModel->getUserById($id);
-$lstPaymentMethod=$paymentMethodModel->getDDLPaymentMethod();
 $detail=$info[0];   
+
+$payment=array(
+    "thanh-toan-qua-ngan-hang",
+    "thanh-toan-bang-tien-mat"
+);
+$lstPaymentMethod=array();
+$lstPaymentMethod[]=array("id"=>0,"title"=>"","content"=>"");
+foreach ($payment as $key => $value) {
+    $args=array(
+        "name"=>$value,
+        "post_type"=>"payment_method"
+    );
+    $the_query = new WP_Query( $args );
+    if($the_query->have_posts()){
+        while ($the_query->have_posts()) {
+            $the_query->the_post();
+            $post_id=$the_query->post->ID;
+            $title=get_the_title($post_id);
+            $content=get_the_content($post_id);
+            $item=array();
+            $item["id"]=$post_id;
+            $item["title"]=$title;
+            $item["content"]=$content;
+            $lstPaymentMethod[]=$item;
+        }
+    }
+}
+$totalPrice=0;
+$totalQuantity=0;
+$data=array();   
+$error=$zController->_data["error"];
+$success=$zController->_data["success"];                           
+if(count($zController->_data["data"]) > 0){
+    $data=$zController->_data["data"];                  
+}else{
+    $data=$detail;
+}
 if(have_posts()){
     while (have_posts()) {
         the_post();
@@ -34,39 +70,44 @@ if(have_posts()){
     }
     wp_reset_postdata();
 }
-$msg = "";
-$data=array();        
-$error=$zController->_data["error"];  
-$success=$zController->_data["success"];      
-if(!empty($error)){
-    $msg .= '<ul class="comproduct33">';        
-    foreach ($error as $key => $val){
-        $msg .= '<li>' . $val . '</li>';
-    }
-    $msg .= '</ul>';
-}
-else{
-    if(!empty($success)){
-        $msg .= '<ul class="comproduct35">';        
-        foreach ($success as $key => $val){
-            $msg .= '<li>' . $val . '</li>';
-        }
-        $msg .= '</ul>';
-    }
-}
-if(!empty($msg)){
-    echo $msg; 
-}
-if(count($zController->_data["data"])==0){
-    $data=$detail;
-}
-else{
-    $data=$zController->_data["data"];
-}
-$totalPrice=0;
-$totalQuantity=0;
 ?>
 <div class="margin-top-15">
+    <?php 
+    if(count($error) > 0 || count($success) > 0){
+        ?>
+        <div class="alert">
+            <?php                                           
+            if(count($error) > 0){
+                ?>
+                <ul class="comproduct33">
+                    <?php 
+                    foreach ($error as $key => $value) {
+                        ?>
+                        <li><?php echo $value; ?></li>
+                        <?php
+                    }
+                    ?>                              
+                </ul>
+                <?php
+            }
+            if(count($success) > 0){
+                ?>
+                <ul class="comproduct50">
+                    <?php 
+                    foreach ($success as $key => $value) {
+                        ?>
+                        <li><?php echo $value; ?></li>
+                        <?php
+                    }
+                    ?>                              
+                </ul>
+                <?php
+            }
+            ?>                                              
+        </div>              
+        <?php
+    }
+    ?>
     <table id="com_product16" class="com_product16" cellpadding="0" cellspacing="0" width="100%">
         <thead>
             <tr>    

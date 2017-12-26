@@ -114,20 +114,20 @@ function cmsSelectbox($id="",$name = "",$class="",$arrValue=array(), $keySelect 
   $xhtml .= '</select>';
   return $xhtml;
 }
-	public function fnPrice($value){
-		$data = get_option('zendvn_sp_setting',array());
-		$language = $data["currency_unit"] ;
-		$strCurrency="";
-		switch ($language) {
-    case "vi_VN":
-    $strCurrency= number_format($value,0,",",".") . ' đ';
-    break;
-    case "en_US":
-    $strCurrency='$'.number_format($value,0,".",",");
-    break;
-  }
-		return $strCurrency;
+public function fnPrice($value){
+	$data = get_option('zendvn_sp_setting',array());
+	$language = $data["currency_unit"] ;
+	$strCurrency="";
+	switch ($language) {
+		case "vi_VN":
+		$strCurrency= number_format($value,0,",",".") . ' đ';
+		break;
+		case "en_US":
+		$strCurrency='$'.number_format($value,0,".",",");
+		break;
 	}
+	return $strCurrency;
+}
 	public function randomString($length = 5){	
 		$result=rand(0,999999999);
 		return $result;
@@ -136,5 +136,15 @@ function cmsSelectbox($id="",$name = "",$class="",$arrValue=array(), $keySelect 
 		preg_match("/[^\/|\\\]+$/", $fileUrl,$currentName);
 		$fileName = $currentName[0];     
 		return $fileName;
+	}
+	public function getSmallImage($fileUrl)
+	{
+		global $zendvn_sp_settings;
+		$width=$zendvn_sp_settings["product_width"];    
+		$height=$zendvn_sp_settings["product_height"];   
+		preg_match("/[^\/|\\\]+$/", $fileUrl,$currentName);
+		$fileName = $currentName[0];  
+		$smallImg=site_url("wp-content/uploads/".$width."x".$height."-".$fileName);
+		return $smallImg;	
 	}
 }

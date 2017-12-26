@@ -3,6 +3,7 @@
 </div>
 <div class="container margin-top-15">  
     <?php 
+    global $zController;
     $vHtml=new HtmlControl();    
     $pageIDLogin = $zController->getHelper('GetPageId')->get('_wp_page_template','login.php');   
     $permarlinkLogin = get_permalink($pageIDLogin);           
@@ -17,48 +18,62 @@
     $userModel=$zController->getModel("/frontend","UserModel"); 
     $info=$userModel->getUserById($id);
     $detail=$info[0];   
-    if(have_posts()){
-        while (have_posts()) {
-            the_post();
-            echo '<h3 class="ecommerce">'.get_the_title().'</h3>';
-        }
-        wp_reset_postdata();
-    }
-    $msg = "";
-    $data=array();        
-    $error=$zController->_data["error"];  
-    $success=$zController->_data["success"];      
-    if(!empty($error)){
-        $msg .= '<ul class="comproduct33">';        
-        foreach ($error as $key => $val){
-            $msg .= '<li>' . $val . '</li>';
-        }
-        $msg .= '</ul>';
-        
-    }
-    else{
-        if(!empty($success)){
-            $msg .= '<ul class="comproduct35">';        
-            foreach ($success as $key => $val){
-                $msg .= '<li>' . $val . '</li>';
-            }
-            $msg .= '</ul>';
-        }
-    }    
-    if(!empty($msg)) {
-        echo $msg;          
-    }
-    if(count($zController->_data["data"])==0){
-        $data=$detail;
-    }
-    else{
-        $data=$zController->_data["data"];
-    }        
     ?>
     <form  method="post"  class="frm margin-top-15" name="frm">        
         <input type="hidden" name="id" value="<?php echo $detail["id"]; ?>" />
         <input type="hidden" name="action" value="change-info" />                    
-        <?php wp_nonce_field("change-info",'security_code',true);?>         
+        <?php wp_nonce_field("change-info",'security_code',true);?> 
+        <?php 
+        if(have_posts()){
+            while (have_posts()) {
+                the_post();
+                echo '<h3 class="ecommerce">'.get_the_title().'</h3>';
+            }
+            wp_reset_postdata();
+        }
+        $data=array();   
+        $error=$zController->_data["error"];
+        $success=$zController->_data["success"];                           
+        if(count($zController->_data["data"]) > 0){
+            $data=$zController->_data["data"];                  
+        }else{
+            $data=$detail;
+        }
+        if(count($error) > 0 || count($success) > 0){
+            ?>
+            <div class="alert">
+                <?php                                           
+                if(count($error) > 0){
+                    ?>
+                    <ul class="comproduct33">
+                        <?php 
+                        foreach ($error as $key => $value) {
+                            ?>
+                            <li><?php echo $value; ?></li>
+                            <?php
+                        }
+                        ?>                              
+                    </ul>
+                    <?php
+                }
+                if(count($success) > 0){
+                    ?>
+                    <ul class="comproduct50">
+                        <?php 
+                        foreach ($success as $key => $value) {
+                            ?>
+                            <li><?php echo $value; ?></li>
+                            <?php
+                        }
+                        ?>                              
+                    </ul>
+                    <?php
+                }
+                ?>                                              
+            </div>              
+            <?php
+        }
+        ?>        
         <table id="com_product30" class="com_product30" border="0" width="90%" cellpadding="0" cellspacing="0">        
             <tbody>        
                 <tr>
