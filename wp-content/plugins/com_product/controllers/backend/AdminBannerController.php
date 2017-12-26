@@ -1,90 +1,102 @@
 <?php
-class AdminBannerController{
-	private $_page = '';
-	public function __construct(){		
-		$this->dispatch_function();
-	}		
-	public function dispatch_function(){
-		global $zController;		
-		$action = $zController->getParams('action');
-		switch ($action){
-			case 'add'		: $this->add(); break;
-			case 'edit'		: $this->edit(); break;
-			case 'delete'	: $this->delete(); break;
-			case 'active'	: 
-			case 'inactive'	:
-							  $this->status(); break;
-							
-			default			: $this->display(); break;
-		}
+class AdminBannerController{		
+	private $_metabox_id="zendvn-sp-banner";
+	private $_prefix_id="zendvn-sp-banner-";	
+	private $_prefix_key="_zendvn_sp_banner_";
+	public function __construct(){
+		global $zController;				
+		preg_match('#(?:.+\/)(.+)#', $_SERVER['SCRIPT_NAME'],$matches);
+		$phpFile = $matches[1];
+		if($zController->getParams("post_type")=="banner"){			
+			if($phpFile == 'edit.php'){				
+				add_action('manage_banner_posts_custom_column', array($this,'display_value_column'),10,2);
+				add_filter('manage_edit-banner_sortable_columns', array($this,'sortable_cols'));
+				add_action('pre_get_posts', array($this,'modify_query'));
+				add_action('restrict_manage_posts', array($this,'category_banner_list'));
+			}			
+		}				
 	}
-	
-	public function display(){
+	public function category_banner_list(){
 		global $zController;
-		if($zController->getParams('action') == -1){
-			$url = $this->createUrl();
-			wp_redirect($url);
-		}
-		$zController->getView('/backend/banner/display.php');
+		wp_dropdown_categories(array(
+			'show_option_all' => __("Show All ZA Category"),
+			'taxonomy'			=> 'category_banner',
+			'name'				=> 'category_banner',
+			'orderby'			=> 'name',
+			'selected'			=> $zController->getParams('category_banner'),
+			'hierarchical'		=> true,
+			'depth'				=> 3,
+			'show_count'		=> true,
+			'hide_empty'		=> true,
+			
+		));
 	}
-	
-	public function createUrl(){
-		global $zController;		
-		$url = 'admin.php?page=' . $zController->getParams('page');
-		if($zController->getParams('filter_status') != '0'){
-			$url .= '&filter_status=' . $zController->getParams('filter_status');
+	public function modify_query($query){
+		global $zController;
+		if($zController->getParams('orderby') == ''){
+			$query->set('orderby','ID');
+			$query->set('order','DESC');
+		}
+		
+		$orderby = $query->get('orderby');
+		
+		if($orderby == 'view'){
+			$query->set('meta_key',$this->create_key('view'));
+			$query->set('orderby','meta_value_num');
+		}
+		
+		
+		if($zController->getParams('category_banner') > 0){
+			
+			$tax_query = array(
+				'relation' => 'OR',
+				array(
+					'taxonomy' => 'category_banner',
+					'field'		=> 'term_id',
+					'terms'		=> $zController->getParams('category_banner'),
+				));
+			$query->set('tax_query',$tax_query);
+		}
+		
+	}
+	public function sortable_cols($columns){		
+		$columns['id'] 		= 'ID';
+		$columns['view'] 	= 'view';
+		return $columns;
+	}
+	public function display_value_column($column,$post_id){		
+		if($column == 'id'){
+			echo $post_id;
+		}
+		if($column == 'view'){
+			$view  = get_post_meta($post_id, $this->create_key('view'),true);
+			if($view == null){
+				update_post_meta($post_id, $this->create_key('view'), 0);
+				echo '0';
+			}else{
+				echo $view;
+			}
+			
 		}		
-		if(mb_strlen($zController->getParams('s'))){
-			$url .= '&s=' . $zController->getParams('s');
-		}		
-		return $url;
+		if($column == 'category'){
+			echo get_the_term_list($post_id, 'category_banner','', ', ');
+		}
+	}
+	public function add_column($columns){		
+		$newArr = array();
+		foreach ($columns as $key => $title){
+			$newArr[$key] = $title;
+			if($key == 'author'){
+				$newArr['category'] = __('Category');
+			}
+		}
+		
+		$new_columns = array(
+			'view'=> __('View'),
+			'id' => __('ID')
+		);
+		$newArr = array_merge($newArr,$new_columns);
+		return $newArr;
 	}
 	
-
-	public function add(){		
-		global $zController;
-		if(strcmp($_SERVER['REQUEST_METHOD'], 'POST')==0){
-			$model = $zController->getModel('/backend','AdminBannerModel');
-			$model->save_item();
-			$url = 'admin.php?page=' . $_REQUEST['page'] . '&msg=1';
-			wp_redirect($url); 
-		}
-		$zController->getView('/backend/banner/form.php');
-	}
-	
-	public function edit(){
-		global $zController;
-		if(strcmp($_SERVER['REQUEST_METHOD'],'POST')!=0){
-			$model = $zController->getModel('/backend','AdminBannerModel');			
-			$data=array();
-			$data = $model->getItem();				
-			$zController->_data = $data;				
-		}else{
-			$model = $zController->getModel('/backend','AdminBannerModel');
-			$model->save_item();
-			$url = 'admin.php?page=' . $_REQUEST['page'] . '&msg=1';
-			wp_redirect($url); 
-		}
-		$zController->getView('/backend/banner/form.php');
-	}
-	
-	public function delete(){		
-		global $zController;		
-		$arrParam = $zController->getParams();
-		if(!is_array($arrParam['id'])){
-			$action 	= 'delete_id_' . $arrParam['id'];
-			check_admin_referer($action,'security_code');
-		}else{
-			wp_verify_nonce('_wpnonce');
-		}
-		$model = $zController->getModel('/backend','AdminBannerModel');
-		$model->deleteItem();
-		$paged = max(1,$arrParam['paged']);
-		$url = 'admin.php?page=' . $_REQUEST['page']. '&msg=1';
-		wp_redirect($url);
-	}
-
-	public function no_access(){
-
-	}
 }

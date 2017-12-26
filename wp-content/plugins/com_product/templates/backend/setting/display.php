@@ -65,34 +65,13 @@ $smtp_username		= $vHtml->cmsTextbox($inputID,$inputName,"regular-text", $inputV
 $inputID 			= $option_name . '_smtp_password';
 $inputName 			= $option_name . '[smtp_password]';
 $inputValue 		= !empty(@$data['smtp_password']) ? @$data['smtp_password'] : '';			
-$smtp_password		= $vHtml->cmsPassword($inputID,$inputName,"regular-text", $inputValue);			
-
-$inputID 			= $option_name . '_email_from';
-$inputName 			= $option_name . '[email_from]';
-$inputValue 		= !empty(@$data['email_from']) ? @$data['email_from'] : '';			
-$arr 				= array('size' =>'25','id' => $inputID);
-$email_from			= $vHtml->cmsTextbox($inputID,$inputName,"regular-text", $inputValue);			
+$smtp_password		= $vHtml->cmsPassword($inputID,$inputName,"regular-text", $inputValue);				
 
 $inputID 			= $option_name . '_email_to';
 $inputName 			= $option_name . '[email_to]';
 $inputValue 		= !empty(@$data['email_to']) ? @$data['email_to'] : '';			
 $arr 				= array('size' =>'25','id' => $inputID);
 $email_to			= $vHtml->cmsTextbox($inputID,$inputName,"regular-text", $inputValue);
-
-$inputID 			= $option_name . '_from_name';
-$inputName 			= $option_name . '[from_name]';
-$inputValue 		= !empty(@$data['from_name']) ? @$data['from_name'] : '';			
-$from_name			= $vHtml->cmsTextbox($inputID,$inputName,"regular-text", $inputValue);			
-
-$inputID 			= $option_name . '_to_name';
-$inputName 			= $option_name . '[to_name]';
-$inputValue 		= !empty(@$data['to_name']) ? @$data['to_name'] : '';			
-$to_name			= $vHtml->cmsTextbox($inputID,$inputName,"regular-text", $inputValue);
-
-$inputID 			= $option_name . '_contacted_phone';
-$inputName 			= $option_name . '[contacted_phone]';
-$inputValue 		= !empty(@$data['contacted_phone']) ? @$data['contacted_phone'] : '';			
-$contacted_phone			= $vHtml->cmsTextbox($inputID,$inputName,"regular-text", $inputValue);
 
 $inputID 			= $option_name . '_address';
 $inputName 			= $option_name . '[address]';
@@ -108,16 +87,6 @@ $inputID 			= $option_name . '_telephone';
 $inputName 			= $option_name . '[telephone]';
 $inputValue 		= !empty(@$data['telephone']) ? @$data['telephone'] : '';			
 $telephone			= $vHtml->cmsTextbox($inputID,$inputName,"regular-text", $inputValue);
-
-$inputID 			= $option_name . '_opened_time';
-$inputName 			= $option_name . '[opened_time]';
-$inputValue 		= !empty(@$data['opened_time']) ? @$data['opened_time'] : '';			
-$opened_time			= $vHtml->cmsTextbox($inputID,$inputName,"regular-text", $inputValue);
-
-$inputID 			= $option_name . '_opened_date';
-$inputName 			= $option_name . '[opened_date]';
-$inputValue 		= !empty(@$data['opened_date']) ?  @$data['opened_date'] : '';			
-$opened_date			= $vHtml->cmsTextbox($inputID,$inputName,"regular-text", $inputValue);
 
 $inputID 			= $option_name . '_contacted_name';
 $inputName 			= $option_name . '[contacted_name]';
@@ -158,11 +127,6 @@ $inputID 			= $option_name . '_linkedin_url';
 $inputName 			= $option_name . '[linkedin_url]';
 $inputValue 		= !empty(@$data['linkedin_url']) ? @$data['linkedin_url'] : '';			
 $linkedin_url			= $vHtml->cmsTextbox($inputID,$inputName,"regular-text", $inputValue);
-
-$inputID 			= $option_name . '_slogan_about';
-$inputName 			= $option_name . '[slogan_about]';
-$inputValue 		= !empty(@$data['slogan_about']) ? @$data['slogan_about'] : '';			
-$slogan_about			= $vHtml->cmsTextbox($inputID,$inputName,"regular-text", $inputValue);
 
 $inputID 			= $option_name . '_ban_do';
 $inputName 			= $option_name . '[ban_do]';
@@ -224,7 +188,7 @@ $ban_do			=$vHtml->cmsTextarea($inputID,$inputName,"widefat",$inputValue,8,120);
 					</tr>
 				</tbody>			
 			</table>
-		</div>				
+		</div>	
 		<h2><i><font color="red">Email configs</font></i></h2>
 		<div class="zendvn-sp-form-table">
 			<table class="form-table">
@@ -264,44 +228,26 @@ $ban_do			=$vHtml->cmsTextarea($inputID,$inputName,"widefat",$inputValue,8,120);
 							<b><i><label >SMTP password</label></i></b>
 						</th>
 						<td><?php echo $smtp_password;?></td>
-					</tr>
-					<tr>
-						<th scope="row">
-							<b><i><label >Email from</label></i></b>
-						</th>
-						<td><?php echo $email_from;?></td>
-					</tr>	
+					</tr>					
 					<tr>
 						<th scope="row">
 							<b><i><label >Email to</label></i></b>
 						</th>
 						<td><?php echo $email_to;?></td>
-					</tr>	
+					</tr>						
 					<tr>
 						<th scope="row">
-							<b><i><label >From name</label></i></b>
+							<b><i><label >Contacted name</label></i></b>
 						</th>
-						<td><?php echo $from_name;?></td>
-					</tr>				
-					<tr>
-						<th scope="row">
-							<b><i><label >Name to</label></i></b>
-						</th>
-						<td><?php echo $to_name;?></td>
-					</tr>				
+						<td><?php echo $contacted_name;?></td>
+					</tr>									
 				</tbody>			
 			</table>
-		</div>
+		</div>					
 		<h2><i><font color="red">Contact</font></i></h2>
 		<div class="zendvn-sp-form-table">
 			<table class="form-table">
-				<tbody>
-					<tr>
-						<th scope="row">
-							<b><i><label >Contact phone</label></i></b>
-						</th>
-						<td><?php echo $contacted_phone;?></td>
-					</tr>
+				<tbody>					
 					<tr>
 						<th scope="row">
 							<b><i><label >Address</label></i></b>
@@ -313,31 +259,14 @@ $ban_do			=$vHtml->cmsTextarea($inputID,$inputName,"widefat",$inputValue,8,120);
 							<b><i><label >Website</label></i></b>
 						</th>
 						<td><?php echo $website;?></td>
-					</tr>
+					</tr>					
 					<tr>
 						<th scope="row">
 							<b><i><label >Tel</label></i></b>
 						</th>
 						<td><?php echo $telephone;?></td>
 					</tr>
-					<tr>
-						<th scope="row">
-							<b><i><label >Opened time</label></i></b>
-						</th>
-						<td><?php echo $opened_time;?></td>
-					</tr>
-					<tr>
-						<th scope="row">
-							<b><i><label >Opened date</label></i></b>
-						</th>
-						<td><?php echo $opened_date;?></td>
-					</tr>
-					<tr>
-						<th scope="row">
-							<b><i><label >Contacted name</label></i></b>
-						</th>
-						<td><?php echo $contacted_name;?></td>
-					</tr>
+									
 					<tr>
 						<th scope="row">
 							<b><i><label >Facebook</label></i></b>
@@ -379,13 +308,7 @@ $ban_do			=$vHtml->cmsTextarea($inputID,$inputName,"widefat",$inputValue,8,120);
 							<b><i><label >Linked in</label></i></b>
 						</th>
 						<td><?php echo $linkedin_url;?></td>
-					</tr>
-					<tr>
-						<th scope="row">
-							<b><i><label >Slogan About</label></i></b>
-						</th>
-						<td><?php echo $slogan_about;?></td>
-					</tr>
+					</tr>					
 					<tr>
 						<th scope="row">
 							<b><i><label >Bản đồ</label></i></b>

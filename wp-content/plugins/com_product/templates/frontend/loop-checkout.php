@@ -203,14 +203,14 @@ if(have_posts()){
                         <td>
                             <select class="form-control" name="payment_method" onchange="changePaymentMethod(this.value);">
                                 <?php 
-                                for($i=0;$i<count($lstPaymentMethod);$i++){
-                                    $id=$lstPaymentMethod[$i]["id"];
-                                    $title=$lstPaymentMethod[$i]["title"];
-                                    if((int)@$data["payment_method"] == (int)$id)
+                                foreach ($lstPaymentMethod as $key => $value) {
+                                    $id=$value["id"];
+                                    $title=$value["title"];
+                                    if((int)@$data["payment_method"] == (int)@$id)
                                         echo '<option selected value="'.$id.'">'.$title.'</option>';                               
                                     else
                                         echo '<option          value="'.$id.'">'.$title.'</option>';                               
-                                }
+                                }                            
                                 ?>                                                    
                             </select>
                         </td>
@@ -252,5 +252,7 @@ if(have_posts()){
         });
     }
 </script>
+
+
 
 
