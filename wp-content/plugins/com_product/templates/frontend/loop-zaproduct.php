@@ -49,11 +49,16 @@ $linkedin_url=$zendvn_sp_settings['linkedin_url'];
             $term_name=$term[0]->name;
             $term_slug=$term[0]->slug;
             $product_code=get_post_meta( $post_id,$meta_key.'product_code', true );
-            $intro=get_post_meta( $post_id, $meta_key . 'intro', true );
-            $price=get_post_meta( $post_id, $meta_key . 'price', true );            
-            $sale_price=get_post_meta( $post_id, $meta_key . 'sale_price', true );   
-            $price=$vHtml->fnPrice($price);
-            $sale_price=$vHtml->fnPrice($sale_price);                        
+            $price_text="";
+        $sale_price_text="";
+        $price=get_post_meta( $post_id, $meta_key . 'price', true );            
+        $sale_price=get_post_meta( $post_id, $meta_key . 'sale_price', true );           
+        if(!empty($price)){
+            $price_text='<div class="bellesa-price">'.$vHtml->fnPrice($price).'</div>';
+        }
+        if(!empty($sale_price)){
+            $sale_price_text='<div class="bellesa-sale-price">'.$vHtml->fnPrice($sale_price).'</div>';
+        }        
             ?>
             <form  method="post"  class="frm" name="frm">
                 <div class="our-member relative">
@@ -72,19 +77,19 @@ $linkedin_url=$zendvn_sp_settings['linkedin_url'];
                                 <h3 class="bellesa-product-detail-title"><?php echo $title; ?></h3>
                                 <div class="bellesa-zaproduct">                                    
                                     <ul>
-                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-star-o"></i></a></li>
-                                    </ul>                                   
+                                        <li><a href="javascript:void(0;)"><i class="fa fa-star"></i></a></li>
+                                        <li><a href="javascript:void(0;)"><i class="fa fa-star"></i></a></li>
+                                        <li><a href="javascript:void(0;)"><i class="fa fa-star"></i></a></li>
+                                        <li><a href="javascript:void(0;)"><i class="fa fa-star"></i></a></li>
+                                        <li><a href="javascript:void(0;)"><i class="fa fa-star-o"></i></a></li>
+                                    </ul>                                 
                                 </div>
-                                <div class="bellesa-price"><?php echo $price; ?></div>
-                                <div class="bellesa-sale-price"><?php echo $sale_price; ?></div>
+                                <?php echo $price_text; ?>
+                                <?php echo $sale_price_text; ?>
                                 <div class="bellesa-cart">
                                     <ul class="inline-block">
                                         <li>
-                                            <input type="text" name="quantity" value="1" class="quantity" />
+                                            <input type="text" name="quantity" value="1" onkeypress="return isNumberKey(event);" class="quantity" />
                                         </li>
                                         <li>
                                             <a href="javascript:void(0);" data-toggle="modal" data-target="#modal-alert-add-cart" onclick="javascript:addToCart(<?php echo $post_id; ?>,document.getElementsByName('quantity')[0].value);" >Add to cart</a>

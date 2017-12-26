@@ -160,7 +160,7 @@ $totalQuantity=0;
                     </tr>                                               
                     <tr>
                         <td>
-                            <select id="payment_method" name="payment_method" onchange="changePaymentMethod(this.value);">
+                            <select class="form-control" name="payment_method" onchange="changePaymentMethod(this.value);">
                                 <?php 
                                 for($i=0;$i<count($lstPaymentMethod);$i++){
                                     $id=$lstPaymentMethod[$i]["id"];
@@ -175,7 +175,7 @@ $totalQuantity=0;
                         </td>
                     </tr>
                     <tr>
-                        <td><span id="payment_method_content"></span></td>
+                        <td><span class="payment_method_content"></span></td>
                     </tr>
                     <tr>                               
                         <td class="com_product31" align="right">
@@ -190,5 +190,26 @@ $totalQuantity=0;
     </form>
 </div>
 </div>
+<script type="text/javascript">
+    function changePaymentMethod(payment_method_id) {
+        var dataObj = {
+            "action"    : "load_payment_method_info",
+            "payment_method_id"     : payment_method_id,                    
+            "security"  : security_code
+        };
+        jQuery.ajax({
+            url         : ajaxurl,
+            type        : "POST",
+            data        : dataObj,
+            dataType    : "json",
+            success     : function(data, status, jsXHR){
+                jQuery("span.payment_method_content").empty();                
+                if(data != null){
+                    jQuery("span.payment_method_content").append(data.content);
+                }               
+            }
+        });
+    }
+</script>
 
 

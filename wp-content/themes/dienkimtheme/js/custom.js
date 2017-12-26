@@ -33,23 +33,7 @@ function showLstInvoiceDetail(lnk_image,value,quantity,total_price){
 		});
 
 	}
-function changePaymentMethod(payment_method_id)	{
-	var dataObj = {
-					"action"	: "load_payment_method_info",
-					"payment_method_id"		: payment_method_id,					
-					"security"  : security_code
-				};
-	jQuery.ajax({
-			url			: ajaxurl,
-			type		: "POST",
-			data		: dataObj,
-			dataType	: "json",
-			success		: function(data, status, jsXHR){
-							jQuery("#payment_method_content").empty();
-							jQuery("#payment_method_content").append(data.content);
-						}
-		});
-}
+
 function xacnhanxoa(msg){if(window.confirm(msg)){return true;}return false;}
 function changePage(page){
 	$sjc('input[name=filter_page]').val(page);$sjc('.frm')[0].submit();}
