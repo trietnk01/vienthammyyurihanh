@@ -33,11 +33,11 @@ $args = array(
 			'terms'    => $arrID,									
 		),
 	),
-);    			
-switch ($position) {
-	case "massage-theraphy":		
-	$the_query=new WP_Query($args);				
-	if($the_query->have_posts()){		
+);  
+$the_query=new WP_Query($args);				
+if($the_query->have_posts()){
+	switch ($position) {
+		case "massage-theraphy":		
 		?>		
 		<div>
 			<div class="clr"></div>
@@ -102,46 +102,43 @@ switch ($position) {
 				</div>
 			</div>			
 		</div>			
-		<?php
-	}
-	break;	
-	case 'face-service-widget':
-	case 'foot-service-widget':
-	case 'body-service-widget':
-	case 'massage-service-widget':	
-	?>
-	<script type="text/javascript" language="javascript">
-		jQuery(document).ready(function(){
-			jQuery(".service").owlCarousel({
-				autoplay:true,                    
-				loop:true,
-				margin:10,                        
-				nav:true,            
-				mouseDrag: false,
-				touchDrag: false,                                
-				responsiveClass:true,
-				responsive:{
-					0:{
-						items:1
-					},
-					600:{
-						items:3
-					},
-					1000:{
-						items:3
+		<?php	
+		break;	
+		case 'face-service-widget':
+		case 'foot-service-widget':
+		case 'body-service-widget':
+		case 'massage-service-widget':	
+		?>
+		<script type="text/javascript" language="javascript">
+			jQuery(document).ready(function(){
+				jQuery(".service").owlCarousel({
+					autoplay:true,                    
+					loop:true,
+					margin:10,                        
+					nav:true,            
+					mouseDrag: false,
+					touchDrag: false,                                
+					responsiveClass:true,
+					responsive:{
+						0:{
+							items:1
+						},
+						600:{
+							items:3
+						},
+						1000:{
+							items:3
+						}
 					}
-				}
-			});
-			var chevron_left='<i class="fa fa-chevron-left"></i>';
-			var chevron_right='<i class="fa fa-chevron-right"></i>';
-			jQuery("div.service div.owl-prev").html(chevron_left);
-			jQuery("div.service div.owl-next").html(chevron_right);	
-			jQuery("a.youtube").YouTubePopup({ hideTitleBar: true });				
-		});  			     
-	</script>	
-	<?php 	
-	$the_query = new WP_Query($args);		
-	if($the_query->have_posts()){		
+				});
+				var chevron_left='<i class="fa fa-chevron-left"></i>';
+				var chevron_right='<i class="fa fa-chevron-right"></i>';
+				jQuery("div.service div.owl-prev").html(chevron_left);
+				jQuery("div.service div.owl-next").html(chevron_right);	
+				jQuery("a.youtube").YouTubePopup({ hideTitleBar: true });				
+			});  			     
+		</script>	
+		<?php 	
 		echo '<div class="owl-carousel service owl-theme">	';								
 		while ($the_query->have_posts()) {
 			$the_query->the_post();		
@@ -164,12 +161,10 @@ switch ($position) {
 		}				
 		wp_reset_postdata();  
 		echo '</div>';
-	}					
-	break;	
-	case 'our-best-price':	
-	$the_query = new WP_Query($args);	
-	$k=1;	
-	if($the_query->have_posts()){
+		break;	
+		case 'our-best-price':	
+		
+		$k=1;			
 		?>		
 		<div>					
 			<div class="margin-top-15">
@@ -208,9 +203,9 @@ switch ($position) {
 			</div>	
 		</div>
 		<?php
-	}	
-	break;			
-}
+		break;			
+	}
+}  			
 ?>
 
 

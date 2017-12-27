@@ -33,11 +33,11 @@ $args = array(
 			'terms'    => $arrID,									
 		),
 	),
-);    			
-switch ($position) {
-	case 'our-products':
-	$the_query=new WP_Query($args);
-	if($the_query->have_posts()){
+);    
+$the_query=new WP_Query($args);	
+if($the_query->have_posts()){
+	switch ($position) {
+		case 'our-products':	
 		?>
 		<div class="margin-top-15">
 			<div class="category-description"><?php echo $description; ?></div>
@@ -75,59 +75,59 @@ switch ($position) {
 			<div class="owl-carousel perfume-featured owl-theme">						
 				<?php 
 				while ($the_query->have_posts()) {
-							$the_query->the_post();		
-							$post_id=$the_query->post->ID;							
-							$permalink=get_the_permalink($post_id);
-							$title=get_the_title($post_id);
-							$excerpt=get_post_meta($post_id,"product_intro",true);
-							$excerpt=substr($excerpt, 0,100).'...';			
-							$price=get_post_meta($post_id,$meta_key."price",true);
-							$sale_price=get_post_meta($post_id,$meta_key."sale_price",true);
-							$html_price='';						
-							if((int)($sale_price) > 0){				
-								$price ='<span class="price-regular">'.$vHtml->fnPrice($price).'</span>';
-								$sale_price='<span class="price-sale">'.$vHtml->fnPrice($sale_price).'</span>' ;					
-								$html_price='<div class="col-xs-6">'.$price.'</div><div class="col-xs-6">'.$sale_price.'</div><div class="clr"></div>' ;				
-							}else{
-								$price='<span class="price-sale">'.$vHtml->fnPrice($price).'</span>' ;	
-								$html_price=$price;		
-							}		
-							$featureImg=wp_get_attachment_url(get_post_thumbnail_id($post_id));		    							                
-							?>			
-							<div class="perfume-box">
-								<div><center><figure><a href="<?php echo $permalink; ?>"><img src="<?php echo $featureImg; ?>" /></a></figure></center></div>			
-								<div class="perfume-title"><a href="<?php echo $permalink; ?>"><?php echo $title; ?></a></div>						
-								<div class="perfume-rating">
-									<center>
-										<ul >
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-											<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-										</ul>
-									</center>
-								</div>
-								<div class="perfume-featured-price">
-									<div><?php echo $html_price; ?></div>
+					$the_query->the_post();		
+					$post_id=$the_query->post->ID;							
+					$permalink=get_the_permalink($post_id);
+					$title=get_the_title($post_id);
+					$excerpt=get_post_meta($post_id,"product_intro",true);
+					$excerpt=substr($excerpt, 0,100).'...';			
+					$price=get_post_meta($post_id,$meta_key."price",true);
+					$sale_price=get_post_meta($post_id,$meta_key."sale_price",true);
+					$html_price='';						
+					if((int)($sale_price) > 0){				
+						$price ='<span class="price-regular">'.$vHtml->fnPrice($price).'</span>';
+						$sale_price='<span class="price-sale">'.$vHtml->fnPrice($sale_price).'</span>' ;					
+						$html_price='<div class="col-xs-6">'.$price.'</div><div class="col-xs-6">'.$sale_price.'</div><div class="clr"></div>' ;				
+					}else{
+						$price='<span class="price-sale">'.$vHtml->fnPrice($price).'</span>' ;	
+						$html_price=$price;		
+					}		
+					$featureImg=wp_get_attachment_url(get_post_thumbnail_id($post_id));		    							                
+					?>			
+					<div class="perfume-box">
+						<div><center><figure><a href="<?php echo $permalink; ?>"><img src="<?php echo $featureImg; ?>" /></a></figure></center></div>			
+						<div class="perfume-title"><a href="<?php echo $permalink; ?>"><?php echo $title; ?></a></div>						
+						<div class="perfume-rating">
+							<center>
+								<ul >
+									<li><a href="#"><i class="fa fa-star"></i></a></li>
+									<li><a href="#"><i class="fa fa-star"></i></a></li>
+									<li><a href="#"><i class="fa fa-star"></i></a></li>
+									<li><a href="#"><i class="fa fa-star"></i></a></li>
+									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
+								</ul>
+							</center>
+						</div>
+						<div class="perfume-featured-price">
+							<div><?php echo $html_price; ?></div>
 
-								</div>
-								<div class="perfume-cart">								
-									<ul>
-										<li><a href="javascript:void(0)" data-toggle="modal" data-target="#modal-alert-add-cart" onclick="addToCart(<?php echo $post_id; ?>,1);" >Add to cart</a></li>										
-									</ul>
-								</div>
-							</div>
-							<?php
-						}				
-						wp_reset_postdata();
+						</div>
+						<div class="perfume-cart">								
+							<ul>
+								<li><a href="javascript:void(0)" data-toggle="modal" data-target="#modal-alert-add-cart" onclick="addToCart(<?php echo $post_id; ?>,1);" >Add to cart</a></li>										
+							</ul>
+						</div>
+					</div>
+					<?php
+				}				
+				wp_reset_postdata();
 				?>			
 			</div>
 		</div>				
-		<?php
-	}	
-	break;
-}
+		<?php	
+		break;
+	}
+}		
 ?>
 
 
