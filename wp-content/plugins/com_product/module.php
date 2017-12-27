@@ -6,7 +6,7 @@ class Module{
 					"loadModuleCategoryArticle" 					=> true,	
 					"loadModuleCategoryProduct" 					=> true,	
 					"loadModuleItem" 				=> true,				
-					"loadModuleCommon" 				=> true,							
+					"loadModuleCommon" 				=> true,									
 				);		
 		foreach ($this->_module_options as $key => $val){	
 			if($val == true){

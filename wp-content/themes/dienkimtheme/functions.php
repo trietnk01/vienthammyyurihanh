@@ -37,19 +37,19 @@ function zendvn_theme_widgets_init(){
 		'name'          => __( 'Slideshow', $themeName ),
 		'id'            => 'slideshow',		
 		'class'         => '',
-		'before_widget' => '<div id="%1$s" class="%2$s">',
-		'before_title'  => '<h3>',
-		'after_title'   => '</h3>',
-		'after_widget'  => '</div>'				
+		'before_widget' => '',
+		'before_title'  => '',
+		'after_title'   => '',
+		'after_widget'  => ''				
 	));
 	register_sidebar(array(
 		'name'          => __( 'Massage Theraphy', $themeName ),
 		'id'            => 'massage-theraphy',		
 		'class'         => '',
-		'before_widget' => '<div id="%1$s" class="%2$s">',
-		'before_title'  => '<h3>',
+		'before_widget' => '<div>',
+		'before_title'  => '<h3 class="bellesa-title">',
 		'after_title'   => '</h3>',
-		'after_widget'  => '</div>'				
+		'after_widget'  => '</div>'		
 	));	
 	register_sidebar(array(
 		'name'          => __( 'About our spa', $themeName ),
@@ -267,148 +267,7 @@ function footer_script_code(){
 	';
 	echo $strScript;
 }
-function loadSlideShow($attrs){	
-	ob_start();        	
-	extract(
-		shortcode_atts(
-			array(
-				'item' => '',					
-			), 
-			$attrs
-		)
-	);	      	
-	global $zController,$zendvn_sp_settings,$wpdb;	
-	$data=explode(',',$item);
-	if(count($data) > 0){
-		?>
-		<script type="text/javascript" language="javascript">        
-			jQuery(document).ready(function(){
-				jQuery(".slick-slideshow").slick({
-					dots: false,
-					autoplay:true,
-					arrows:false,
-					adaptiveHeight:true
-				});  
-			});     
-		</script>
-		<?php	
-		echo '<div class="slick-slideshow">';
-		for($i=0;$i<count($data);$i++) {
-			$table = $wpdb->prefix . 'shk_banner';	
-			$sql = "SELECT 	*
-				FROM 	".$table." AS p 
-				WHERE 	p.id = ".$data[$i] ;
-			$result = $wpdb->get_results($sql,ARRAY_A);
-			$banner=site_url('/wp-content/uploads/'.$result[0]['image']);
-			$link_web=$result[0]['link_web'];
-			?>			
-  				<div><a href="<?php echo $link_web; ?>" target="_blank"><img src="<?php echo $banner; ?>" /></a></div>  
-			<?php						
-		}
-		echo '</div>';
-	}	
-}
-add_shortcode('slideshow', 'loadSlideShow');
 
-function loadMassageTheraphy($attrs){
-	
-	ob_start();        	
-	extract(
-		shortcode_atts(
-			array(
-				'item' => '',
-				'title'=>'',
-				'description'=>''					
-			), 
-			$attrs
-		)
-	);	
-	global $zController,$zendvn_sp_settings;
-	$vHtml=new HtmlControl();
-	$width=$zendvn_sp_settings["product_width"];    
-	$height=$zendvn_sp_settings["product_height"];      
-	$meta_key = "_zendvn_sp_post_";
-	$data=explode(',',$item);
-	if(count($data) > 0){		
-		?>
-		<h3 class="bellesa-title"><?php echo $title; ?></h3>	
-			<div class="clr"></div>
-			<div class="margin-top-15">
-				<div class="category-description"><?php echo $description; ?></div>
-				<div class="clr"></div>
-			</div>	
-			<div class="margin-top-45">
-				<script type="text/javascript" language="javascript">
-					jQuery(document).ready(function(){
-						jQuery(".massage-theraphy").owlCarousel({
-							autoplay:true,                    
-							loop:true,
-							margin:10,                        
-							nav:true,            
-							mouseDrag: true,
-							touchDrag: true,                                
-							responsiveClass:true,
-							responsive:{
-								0:{
-									items:1
-								},
-								600:{
-									items:4
-								},
-								1000:{
-									items:4
-								}
-							}
-						});
-						var chevron_left='<i class="fa fa-chevron-left"></i>';
-						var chevron_right='<i class="fa fa-chevron-right"></i>';
-						jQuery("div.massage-theraphy div.owl-prev").html(chevron_left);
-						jQuery("div.massage-theraphy div.owl-next").html(chevron_right);
-					});                
-				</script>
-				<div class="owl-carousel massage-theraphy owl-theme">						
-					<?php 
-					$k=1;
-					foreach ($data as $key => $value) {
-						$args = array(  		
-							'p' => 	$value,			
-							'post_type' => 'post'
-						);			
-						$query = new WP_Query($args);				
-						if($query->have_posts()){		
-
-							
-							while ($query->have_posts()) {
-								$query->the_post();		
-								$post_id=$query->post->ID;							
-								$permalink=get_the_permalink($post_id);
-								$title=get_the_title($post_id);
-								$excerpt=get_post_meta($post_id,$meta_key."intro",true);
-								$excerpt=substr($excerpt, 0,100).'...';			
-								$featureImg=wp_get_attachment_url(get_post_thumbnail_id($post_id));		    							                
-								?>			
-								<div class="massage-theraphy-slick">
-									<div><center><figure><a href="<?php echo $permalink; ?>"><img src="<?php echo $featureImg; ?>" /></a></figure></center></div>
-									<div class="product-article">
-										<div class="product-home-title margin-top-15"><a href="<?php echo $permalink; ?>"><?php echo $title; ?></a></div>
-										<div class="article-home-excerpt margin-top-15"><?php echo $excerpt; ?></div>
-										<div class="margin-top-15"><a class="readmore" href="<?php echo $permalink; ?>">Read more</a></div>
-										<div class="clr"></div>
-									</div>								
-								</div>
-								<?php
-
-							}				
-							wp_reset_postdata();  
-						}						
-					}
-					?>			
-				</div>
-			</div>				
-		<?php		
-	}	
-}
-add_shortcode('massage_theraphy', 'loadMassageTheraphy');
 function loadSpecialService($attrs){	
 
 	ob_start();        	
@@ -489,7 +348,7 @@ function loadSpecialService($attrs){
 		<?php		
 	}	
 }
-add_shortcode('special_service', 'loadSpecialService');
+//add_shortcode('special_service', 'loadSpecialService');
 function getAboutOurSpa($attrs){	
 	ob_start();        	
 	extract(
@@ -552,7 +411,7 @@ function getAboutOurSpa($attrs){
 		<?php		
 	}	
 }
-add_shortcode('about_our_spa', 'getAboutOurSpa');
+//add_shortcode('about_our_spa', 'getAboutOurSpa');
 function getWhyWeAre($attrs){	
 	ob_start();        	
 	extract(
@@ -615,7 +474,7 @@ function getWhyWeAre($attrs){
 		<?php		
 	}	
 }
-add_shortcode('why_we_are', 'getWhyWeAre');
+//add_shortcode('why_we_are', 'getWhyWeAre');
 function loadService($attrs){
 	
 	ob_start();        	
@@ -706,7 +565,7 @@ function loadService($attrs){
 		<?php		
 	}	
 }
-add_shortcode('service', 'loadService');
+//add_shortcode('service', 'loadService');
 function loadVictoriaEspart($attrs){
 	ob_start();        	
 	extract(
@@ -833,7 +692,7 @@ function loadVictoriaEspart($attrs){
 		<?php		
 	}	
 }
-add_shortcode('victoria_esparts', 'loadVictoriaEspart');
+//add_shortcode('victoria_esparts', 'loadVictoriaEspart');
 
 function loadOurBestPrice($attrs){
 	
