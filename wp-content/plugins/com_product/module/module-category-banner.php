@@ -1,12 +1,12 @@
 <?php
-class ModuleCategoryProduct extends WP_Widget {
+class ModuleCategoryBanner extends WP_Widget {
 
 	public function __construct() {		
-		$id_base = 'module-category-product';
-		$name	= 'ModuleCategoryProduct';
+		$id_base = 'module-category-banner';
+		$name	= 'ModuleCategoryBanner';
 		$widget_options = array(
-					'classname' => 'module-category-product',
-					'description' => 'ModuleCategoryProduct'
+					'classname' => 'module-category-banner',
+					'description' => 'ModuleCategoryBanner'
 				);
 		$control_options = array('width'=>'350px');
 		parent::__construct($id_base, $name,$widget_options, $control_options);	
@@ -16,7 +16,7 @@ class ModuleCategoryProduct extends WP_Widget {
 		$title = apply_filters('widget_title', $instance['title']);			
 		echo $before_widget;
 		echo $before_title . $title . $after_title;				 
-		require PLUGIN_PATH . DS . 'module'. DS .'html'. DS .'module-category-product.php';		
+		require PLUGIN_PATH . DS . 'module'. DS .'html'. DS .'module-category-banner.php';		
 		echo $after_widget;						
 	}
 	
@@ -62,7 +62,7 @@ class ModuleCategoryProduct extends WP_Widget {
 				'class'              => 'widefat',
 				'depth'              => 0,
 				'tab_index'          => 0,
-				'taxonomy'           => 'za_category',
+				'taxonomy'           => 'category_banner',
 				'hide_if_empty'      => false,
 		);				
 		$html		= $vHtml->label(translate('Categories'),array('for'=>$inputID))

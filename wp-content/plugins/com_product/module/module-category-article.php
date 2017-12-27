@@ -25,7 +25,7 @@ class ModuleCategoryArticle extends WP_Widget {
 		$instance['title'] 				= strip_tags($new_instance['title']);		
 		$instance['category_id'] 		= strip_tags($new_instance['category_id']);		
 		$instance['items_per_page'] 	= $new_instance['items_per_page'];		
-		$instance['description'] 	= $new_instance['description'];					
+		$instance['description'] 		= $new_instance['description'];					
 		$instance['position'] 			= $new_instance['position'];		
 		return $instance;
 	}

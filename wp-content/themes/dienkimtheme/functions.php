@@ -132,22 +132,13 @@ function zendvn_theme_widgets_init(){
 		'before_title'  => '<h3>',
 		'after_title'   => '</h3>',
 		'after_widget'  => '</div>'				
-	));
-	register_sidebar(array(
-		'name'          => __( 'Vitoria Esparts', $themeName ),
-		'id'            => 'victoria-esparts',		
-		'class'         => '',
-		'before_widget' => '<div id="%1$s" class="%2$s">',
-		'before_title'  => '<h3>',
-		'after_title'   => '</h3>',
-		'after_widget'  => '</div>'				
 	));	
 	register_sidebar(array(
 		'name'          => __( 'Our best price', $themeName ),
 		'id'            => 'our-best-price',		
 		'class'         => '',
-		'before_widget' => '<div id="%1$s" class="%2$s">',
-		'before_title'  => '<h3>',
+		'before_widget' => '<div>',
+		'before_title'  => '<h3 class="bellesa-title">',
 		'after_title'   => '</h3>',
 		'after_widget'  => '</div>'				
 	));
@@ -156,8 +147,8 @@ function zendvn_theme_widgets_init(){
 		'name'          => __( 'Our products', $themeName ),
 		'id'            => 'our-products',		
 		'class'         => '',
-		'before_widget' => '<div id="%1$s" class="%2$s">',
-		'before_title'  => '<h3>',
+		'before_widget' => '<div class="margin-top-45">',
+		'before_title'  => '<h3 class="bellesa-title">',
 		'after_title'   => '</h3>',
 		'after_widget'  => '</div>'				
 	));
@@ -166,26 +157,26 @@ function zendvn_theme_widgets_init(){
 		'name'          => __( 'Our Testmonail', $themeName ),
 		'id'            => 'our-testmonail',		
 		'class'         => '',
-		'before_widget' => '<div id="%1$s" class="%2$s">',
-		'before_title'  => '<h3>',
+		'before_widget' => '<div>',
+		'before_title'  => '<h3 class="bellesa-title">',
 		'after_title'   => '</h3>',
-		'after_widget'  => '</div>'				
+		'after_widget'  => '</div>'			
 	));
 	register_sidebar(array(
 		'name'          => __( 'Our Cleative Blog', $themeName ),
 		'id'            => 'our-cleative-blog',		
 		'class'         => '',
-		'before_widget' => '<div id="%1$s" class="%2$s">',
-		'before_title'  => '<h3>',
+		'before_widget' => '<div>',
+		'before_title'  => '<h3 class="bellesa-title">',
 		'after_title'   => '</h3>',
-		'after_widget'  => '</div>'				
+		'after_widget'  => '</div>'			
 	));
 	register_sidebar(array(
 		'name'          => __( 'Our member', $themeName ),
 		'id'            => 'our-member',		
 		'class'         => '',
-		'before_widget' => '<div id="%1$s" class="%2$s">',
-		'before_title'  => '<h3>',
+		'before_widget' => '<div>',
+		'before_title'  => '<h3 class="bellesa-title">',
 		'after_title'   => '</h3>',
 		'after_widget'  => '</div>'				
 	));

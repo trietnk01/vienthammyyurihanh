@@ -23,6 +23,8 @@ if(is_admin()){
 	$zController->getController('/backend','AdminCategoryController');
 	$zController->getController('/backend','AdminProductController');
 	$zController->getController('/backend','AdminBannerController');
+	require_once PLUGIN_PATH . DS . 'metabox'. DS .'post-metabox.php';	
+	new PostMetabox();	
 }else{		
 	if(count($zendvn_sp_settings) == 0){
 		$zendvn_sp_settings = $zController->getConfig('SettingConfig')->get();

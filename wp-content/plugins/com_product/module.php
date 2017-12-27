@@ -5,6 +5,7 @@ class Module{
 		$this->_module_options = array(																				
 					"loadModuleCategoryArticle" 					=> true,	
 					"loadModuleCategoryProduct" 					=> true,	
+					"loadModuleCategoryBanner" 					=> true,	
 					"loadModuleItem" 				=> true,				
 					"loadModuleCommon" 				=> true,									
 				);		
@@ -21,6 +22,10 @@ class Module{
 	public function loadModuleCategoryProduct(){
 		require_once PLUGIN_PATH . DS . 'module'. DS .'module-category-product.php';		
 		register_widget('ModuleCategoryProduct');
+	}
+	public function loadModuleCategoryBanner(){
+		require_once PLUGIN_PATH . DS . 'module'. DS .'module-category-banner.php';		
+		register_widget('ModuleCategoryBanner');
 	}
 	public function loadModuleItem(){
 		require_once PLUGIN_PATH . DS . 'module'. DS .'module-item.php';		

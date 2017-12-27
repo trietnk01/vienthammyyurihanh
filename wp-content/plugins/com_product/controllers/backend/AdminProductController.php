@@ -147,9 +147,7 @@ class AdminProductController{
 			'img-ordering' 	=> array_map('absint',$arrParam[$this->create_id('img-ordering')]),
 			'img-url' 		=> $arrParam[$this->create_id('img-url')],					
 			'price' 		=> filter_var($arrParam[$this->create_id('price')],FILTER_VALIDATE_FLOAT),
-			'sale_price' 	=> filter_var($arrParam[$this->create_id('sale_price')],FILTER_VALIDATE_FLOAT),
-			'intro' 		=> trim($arrParam[$this->create_id('intro')])	
-			
+			'sale_price' 	=> filter_var($arrParam[$this->create_id('sale_price')],FILTER_VALIDATE_FLOAT),						
 		);
 		if(!isset($arrParam['save'])){
 			$arrData['view'] = 0;
@@ -188,13 +186,7 @@ class AdminProductController{
 		$label='<label><b>Sale price</b></label>';
 		$textbox=$vHtml->cmsTextbox($inputID,$inputName,"", $inputValue);
 		$html='<div class="form-field">'.$label.'<br/>'.$textbox.'</div>';
-		echo $html;	
-		// Tạo phần tử chứa giới thiệu sơ bộ
-		$inputID = $this->create_id("intro");
-		$inputName = $this->create_id("intro");
-		$inputValue = get_post_meta($post->ID,$this->create_key("intro"),true);		
-		$html		='<div><b>Giới thiệu</b></div><div>'.$vHtml->cmsTextarea($inputID,$inputName,"widefat",$inputValue,8,120).'</div>' ;
-		echo $html;		
+		echo $html;			
 	}
 	public function thumbnail(){
 		global $zController;

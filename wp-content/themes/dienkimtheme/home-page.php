@@ -102,10 +102,7 @@ $pinterest_url=$zendvn_sp_settings['pinterest_url'];
     <?php if(is_active_sidebar('report')):?>
         <?php dynamic_sidebar('report')?>
     <?php endif; ?>
-    <div class="container margin-top-45">
-        <?php if(is_active_sidebar('victoria-esparts')):?>
-            <?php dynamic_sidebar('victoria-esparts')?>
-        <?php endif; ?>            
+    <div class="container margin-top-30">            
         <?php if(is_active_sidebar('our-best-price')):?>
             <?php dynamic_sidebar('our-best-price')?>
         <?php endif; ?>
@@ -113,17 +110,17 @@ $pinterest_url=$zendvn_sp_settings['pinterest_url'];
         <?php if(is_active_sidebar('our-products')):?>
             <?php dynamic_sidebar('our-products')?>
         <?php endif; ?>           
+    </div>           
+    <div class="our-member relative">        
+        <div class="opacity-absolute"></div>
+        <div class="tarik">
+            <div class="container vinmart relative">
+                <?php if(is_active_sidebar('our-member')):?>
+                    <?php dynamic_sidebar('our-member')?>
+                <?php endif; ?>  
+            </div>
+        </div>                    
     </div>    
-    <?php if(is_active_sidebar('our-testmonail')):?>
-        <?php dynamic_sidebar('our-testmonail')?>
-    <?php endif; ?> 
-    <?php if(is_active_sidebar('our-cleative-blog')):?>
-        <?php dynamic_sidebar('our-cleative-blog')?>
-    <?php endif; ?> 
-    <?php if(is_active_sidebar('our-member')):?>
-        <?php dynamic_sidebar('our-member')?>
-    <?php endif; ?> 
-    
     <?php get_footer(); ?>
     <?php wp_footer();?>
 </body>

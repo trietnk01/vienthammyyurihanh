@@ -1,17 +1,6 @@
 <?php 
 global $zController,$zendvn_sp_settings,$wpdb;
 $vHtml=new HtmlControl();
-$email_to=$zendvn_sp_settings['email_to'];
-$address=$zendvn_sp_settings['address'];
-$website=$zendvn_sp_settings['website'];
-$telephone=$zendvn_sp_settings['telephone'];
-$contaced_name=$zendvn_sp_settings['contacted_name'];
-$facebook_url=$zendvn_sp_settings['facebook_url'];
-$twitter_url=$zendvn_sp_settings['twitter_url'];
-$google_plus=$zendvn_sp_settings['google_plus'];
-$youtube_url=$zendvn_sp_settings['youtube_url'];
-$instagram_url=$zendvn_sp_settings['instagram_url'];
-$pinterest_url=$zendvn_sp_settings['pinterest_url'];     
 $width=$zendvn_sp_settings["product_width"];    
 $height=$zendvn_sp_settings["product_height"];      
 $post_meta_key = "_zendvn_sp_post_";
@@ -66,8 +55,7 @@ if(!empty($instance['item_id'])){
 			break;
 			case "why-we-are":
 			?>
-			<div class="why-we-are">		
-				
+			<div class="why-we-are">						
 					<?php 
 					$k=1;
 					foreach ($arrItemID as $key => $value){
@@ -98,8 +86,7 @@ if(!empty($instance['item_id'])){
 							wp_reset_postdata();  
 						}				
 					}					
-					?>
-			
+					?>			
 			</div>
 			<?php
 			break;
