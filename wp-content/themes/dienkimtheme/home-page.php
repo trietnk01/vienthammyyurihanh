@@ -24,7 +24,7 @@ $pinterest_url=$zendvn_sp_settings['pinterest_url'];
      <?php if(is_active_sidebar('slideshow')):?>
         <?php dynamic_sidebar('slideshow')?>
     <?php endif; ?>
-    <div class="container margin-top-45">
+    <div class="container margin-top-15 margin-bottom-30">
         <div class="row">
             <?php if(is_active_sidebar('massage-theraphy')):?>
                 <?php dynamic_sidebar('massage-theraphy')?>

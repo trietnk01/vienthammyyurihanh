@@ -24,7 +24,8 @@ class ModuleCategoryArticle extends WP_Widget {
 		$instance = $old_instance;		
 		$instance['title'] 				= strip_tags($new_instance['title']);		
 		$instance['category_id'] 		= strip_tags($new_instance['category_id']);		
-		$instance['items_per_page'] 	= $new_instance['items_per_page'];					
+		$instance['items_per_page'] 	= $new_instance['items_per_page'];		
+		$instance['description'] 	= $new_instance['description'];					
 		$instance['position'] 			= $new_instance['position'];		
 		return $instance;
 	}
@@ -39,15 +40,7 @@ class ModuleCategoryArticle extends WP_Widget {
 		$class = array("widefat");
 		$html		= $vHtml->label('Title',array('for'=>$inputID))
 					. $vHtml->cmsTextbox($inputID,$inputName,"widefat",$inputValue);
-		echo $vHtml->pTag($html);	
-
-		$inputID 	= $this->get_field_id('description');
-		$inputName 	= $this->get_field_name('description');
-		$inputValue = @$instance['description'];
-		$class = array("widefat");
-		$html		= $vHtml->label('Description',array('for'=>$inputID))
-					. '<br/><textarea id="'.$inputID.'" cols="50" rows="10" name="'.$inputName.'">'.$inputValue.'</textarea>';
-		echo $vHtml->pTag($html);	
+		echo $vHtml->pTag($html);			
 			
 		$inputID 	= $this->get_field_id('category_id');
 		$inputName 	= $this->get_field_name('category_id');
@@ -82,6 +75,14 @@ class ModuleCategoryArticle extends WP_Widget {
 		$class = array("widefat");
 		$html		= $vHtml->label('Số phần tử lấy ra',array('for'=>$inputID))
 					. $vHtml->cmsTextbox($inputID,$inputName,"widefat",$inputValue);
+		echo $vHtml->pTag($html);	
+
+		$inputID 	= $this->get_field_id('description');
+		$inputName 	= $this->get_field_name('description');
+		$inputValue = @$instance['description'];
+		$class = array("widefat");
+		$html		= $vHtml->label('Description',array('for'=>$inputID))
+					. '<br/><textarea id="'.$inputID.'" cols="50" rows="10" name="'.$inputName.'">'.$inputValue.'</textarea>';
 		echo $vHtml->pTag($html);	
 
 		$inputID 	= $this->get_field_id('position');
