@@ -128,6 +128,11 @@ $inputName 			= $option_name . '[linkedin_url]';
 $inputValue 		= !empty(@$data['linkedin_url']) ? @$data['linkedin_url'] : '';			
 $linkedin_url			= $vHtml->cmsTextbox($inputID,$inputName,"regular-text", $inputValue);
 
+$inputID 			= $option_name . '_google_analytics';
+$inputName 			= $option_name . '[google_analytics]';
+$inputValue 		= !empty(@$data['google_analytics']) ? @$data['google_analytics'] : '';			
+$google_analytics			= $vHtml->cmsTextbox($inputID,$inputName,"regular-text", $inputValue);
+
 $inputID 			= $option_name . '_ban_do';
 $inputName 			= $option_name . '[ban_do]';
 $inputValue 		= !empty(@$data['ban_do']) ? @$data['ban_do'] : '';			
@@ -247,7 +252,13 @@ $ban_do			=$vHtml->cmsTextarea($inputID,$inputName,"widefat",$inputValue,8,120);
 		<h2><i><font color="red">Contact</font></i></h2>
 		<div class="zendvn-sp-form-table">
 			<table class="form-table">
-				<tbody>					
+				<tbody>		
+					<tr>
+						<th scope="row">
+							<b><i><label >Google analytics</label></i></b>
+						</th>
+						<td><?php echo $google_analytics;?></td>
+					</tr>				
 					<tr>
 						<th scope="row">
 							<b><i><label >Address</label></i></b>

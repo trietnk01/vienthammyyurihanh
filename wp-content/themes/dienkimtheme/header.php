@@ -1,3 +1,52 @@
+<?php
+/*require_once get_template_directory()."/check-page.php";
+new CheckPage();*/ 
+global $zController,$zendvn_sp_settings;
+$zController->getController("/frontend","ProductController");
+$page_id_register_member = $zController->getHelper('GetPageId')->get('_wp_page_template','register-member.php');  
+$page_id_account = $zController->getHelper('GetPageId')->get('_wp_page_template','account.php');
+$page_id_security = $zController->getHelper('GetPageId')->get('_wp_page_template','security.php');  
+$page_id_history = $zController->getHelper('GetPageId')->get('_wp_page_template','history.php');  
+$page_id_cart = $zController->getHelper('GetPageId')->get('_wp_page_template','zcart.php');   
+$page_id_search = $zController->getHelper('GetPageId')->get('_wp_page_template','search.php');          
+$register_member_link = get_permalink($page_id_register_member);
+$account_link = get_permalink($page_id_account);
+$security_link=get_permalink($page_id_security);
+$history_link=get_permalink($page_id_history );
+$cart_link=get_permalink($page_id_cart );
+$search_link = get_permalink($page_id_search);  
+$ssName="vmuser";
+$ssNameCart="vmart";
+$ssValue="userlogin";
+$ssValueCart="zcart";
+$arrUser=array();
+$ssUser     = $zController->getSession('SessionHelper',$ssName,$ssValue);
+$ssCart     = $zController->getSession('SessionHelper',$ssNameCart,$ssValueCart);
+$arrUser = @$ssUser->get($ssValue)["userInfo"];
+$arrCart = @$ssCart->get($ssValueCart)["cart"];   
+$contacted_phone=$zendvn_sp_settings['contacted_phone'];
+$email_to=$zendvn_sp_settings['email_to'];
+$address=$zendvn_sp_settings['address'];
+$to_name=$zendvn_sp_settings['to_name'];
+$telephone=$zendvn_sp_settings['telephone'];
+$website=$zendvn_sp_settings['website'];
+$opened_time=$zendvn_sp_settings['opened_time'];
+$opened_date=$zendvn_sp_settings['opened_date'];
+$contaced_name=$zendvn_sp_settings['contacted_name'];
+$facebook_url=$zendvn_sp_settings['facebook_url'];
+$twitter_url=$zendvn_sp_settings['twitter_url'];
+$google_plus=$zendvn_sp_settings['google_plus'];
+$youtube_url=$zendvn_sp_settings['youtube_url'];
+$instagram_url=$zendvn_sp_settings['instagram_url'];
+$pinterest_url=$zendvn_sp_settings['pinterest_url'];     
+$google_analytics=$zendvn_sp_settings['google_analytics'];
+$quantity=0; 
+if(count($arrCart) > 0){
+    foreach($arrCart as $cart){    
+        $quantity+=(int)$cart['product_quantity'];
+    }
+}
+?>    
 <!DOCTYPE html>
 <?php 
 global $customizerGlobal;
@@ -62,57 +111,18 @@ global $customizerGlobal;
   <link rel="stylesheet" href="<?php echo get_template_directory_uri() . '/css/template.css'; ?>" />
   <!-- end custom -->
     <?php wp_head();?>    
-    
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $google_analytics; ?>"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '<?php echo $google_analytics; ?>');
+</script>
 </head>
 <body>
-    <?php
-/*require_once get_template_directory()."/check-page.php";
-new CheckPage();*/ 
-global $zController,$zendvn_sp_settings;
-$zController->getController("/frontend","ProductController");
-$page_id_register_member = $zController->getHelper('GetPageId')->get('_wp_page_template','register-member.php');  
-$page_id_account = $zController->getHelper('GetPageId')->get('_wp_page_template','account.php');
-$page_id_security = $zController->getHelper('GetPageId')->get('_wp_page_template','security.php');  
-$page_id_history = $zController->getHelper('GetPageId')->get('_wp_page_template','history.php');  
-$page_id_cart = $zController->getHelper('GetPageId')->get('_wp_page_template','zcart.php');   
-$page_id_search = $zController->getHelper('GetPageId')->get('_wp_page_template','search.php');          
-$register_member_link = get_permalink($page_id_register_member);
-$account_link = get_permalink($page_id_account);
-$security_link=get_permalink($page_id_security);
-$history_link=get_permalink($page_id_history );
-$cart_link=get_permalink($page_id_cart );
-$search_link = get_permalink($page_id_search);  
-$ssName="vmuser";
-$ssNameCart="vmart";
-$ssValue="userlogin";
-$ssValueCart="zcart";
-$arrUser=array();
-$ssUser     = $zController->getSession('SessionHelper',$ssName,$ssValue);
-$ssCart     = $zController->getSession('SessionHelper',$ssNameCart,$ssValueCart);
-$arrUser = @$ssUser->get($ssValue)["userInfo"];
-$arrCart = @$ssCart->get($ssValueCart)["cart"];   
-$contacted_phone=$zendvn_sp_settings['contacted_phone'];
-$email_to=$zendvn_sp_settings['email_to'];
-$address=$zendvn_sp_settings['address'];
-$to_name=$zendvn_sp_settings['to_name'];
-$telephone=$zendvn_sp_settings['telephone'];
-$website=$zendvn_sp_settings['website'];
-$opened_time=$zendvn_sp_settings['opened_time'];
-$opened_date=$zendvn_sp_settings['opened_date'];
-$contaced_name=$zendvn_sp_settings['contacted_name'];
-$facebook_url=$zendvn_sp_settings['facebook_url'];
-$twitter_url=$zendvn_sp_settings['twitter_url'];
-$google_plus=$zendvn_sp_settings['google_plus'];
-$youtube_url=$zendvn_sp_settings['youtube_url'];
-$instagram_url=$zendvn_sp_settings['instagram_url'];
-$pinterest_url=$zendvn_sp_settings['pinterest_url'];     
-$quantity=0; 
-if(count($arrCart) > 0){
-    foreach($arrCart as $cart){    
-        $quantity+=(int)$cart['product_quantity'];
-    }
-}
-?>    
+    
 <header class="header">    
     <div class="container margin-top-15">
         <div class="user-top">
