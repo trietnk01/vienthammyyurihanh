@@ -39,7 +39,7 @@ if($the_query->have_posts()){
 	switch ($position) {
 		case "slideshow":			
 		?>
-		<div>
+		<div class="container">
 			<script type="text/javascript" language="javascript">        
 				jQuery(document).ready(function(){
 					jQuery(".slick-slideshow").slick({
